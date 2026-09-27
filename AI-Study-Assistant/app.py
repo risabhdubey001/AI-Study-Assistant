@@ -1,9 +1,16 @@
 from flask import Flask, render_template, request, jsonify
-import ollama
+import os
+from google import genai
 
 app = Flask(__name__)
 
-MODEL = "llama3.2:3b"
+# Gemini API client
+api_key = os.environ.get("GEMINI_API_KEY")
+
+if api_key:
+    client = genai.Client(api_key=api_key)
+else:
+    client = None
 
 
 def study_assistant(topic, mode):
@@ -48,18 +55,16 @@ Include learning, practice and revision.
     if not prompt:
         return "Please select a valid option."
 
+    if client is None:
+        return "AI Error: GEMINI_API_KEY is not configured."
+
     try:
-        response = ollama.chat(
-            model=MODEL,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ]
+        response = client.models.generate_content(
+            model="gemini-3.8-flash",
+            contents=prompt
         )
 
-        return response["message"]["content"]
+        return response.text
 
     except Exception as e:
         return f"AI Error: {str(e)}"
@@ -83,4 +88,5 @@ def ask():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
