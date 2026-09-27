@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Study Assistant</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>🤖 AI Study Assistant</h1>
+        <p>Your personal learning companion</p>
+    </header>
+
+    <main>
+
+        <section class="card">
+
+            <h2>What do you want to study?</h2>
+
+            <textarea
+                id="topic"
+                placeholder="Example: Explain Artificial Intelligence in easy language..."
+            ></textarea>
+
+            <div class="buttons">
+
+                <button onclick="askAssistant('explain')">
+                    📖 Explain
+                </button>
+
+                <button onclick="askAssistant('summary')">
+                    📝 Summarize
+                </button>
+
+                <button onclick="askAssistant('quiz')">
+                    ❓ Generate Quiz
+                </button>
+
+                <button onclick="askAssistant('plan')">
+                    📅 Study Plan
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="answer-card">
+
+            <h2>💡 Assistant Response</h2>
+
+            <div id="answer">
+                Your answer will appear here...
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>AI Study Assistant | B.Tech CSE Project</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
